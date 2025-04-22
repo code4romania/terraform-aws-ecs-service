@@ -215,6 +215,7 @@ variable "container_memory_hard_limit" {
 variable "container_memory_soft_limit" {
   description = "The soft limit (in MiB) of memory to reserve for the container. "
   type        = number
+  default     = 0
 }
 
 variable "container_depends_on" {

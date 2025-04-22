@@ -4,7 +4,7 @@
 [![GitHub last commit][ico-last-commit]][link-last-commit]
 [![License: MPL 2.0][ico-license]][link-license]
 
-A Terraform module to provision and manage an AWS ECS Cluster.
+A Terraform module to provision and manage an AWS ECS Service.
 
 [Contributing](#contributing) | [Usage](#usage) | [Feedback](#feedback) | [License](#license) | [About Code for Romania](#about-code-for-romania)
 

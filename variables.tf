@@ -374,20 +374,6 @@ variable "service_discovery_namespace_id" {
   default = null
 }
 
-variable "service_registries_port" {
-  type    = number
-  default = null
-}
-
-variable "service_registries_container_name" {
-  type    = string
-  default = null
-}
-
-variable "service_registries_container_port" {
-  type    = number
-  default = null
-}
 
 variable "lb_dns_name" {
   type    = string

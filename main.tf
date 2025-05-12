@@ -14,9 +14,8 @@ resource "aws_ecs_service" "this" {
 
   service_registries {
     registry_arn   = aws_service_discovery_service.this.arn
-    port           = var.service_registries_port
-    container_name = var.service_registries_container_name
-    container_port = var.service_registries_container_port
+    container_name = var.namespace
+    container_port = var.container_port
   }
 
   dynamic "network_configuration" {

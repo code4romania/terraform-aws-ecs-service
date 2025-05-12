@@ -32,35 +32,27 @@ data "aws_iam_policy_document" "ssm_policy" {
 resource "aws_iam_role" "ecs_task_execution_role" {
   name               = "${var.namespace}-ecs-task-execution-role"
   assume_role_policy = data.aws_iam_policy_document.ecs_task_assume.json
+}
 
-  dynamic "inline_policy" {
-    for_each = var.allowed_secrets == null ? [] : [1]
+resource "aws_iam_role_policy" "ecs_secret_policy" {
+  count  = var.allowed_secrets != null ? 1 : 0
+  role   = aws_iam_role.ecs_task_execution_role.name
+  name   = "SecretsPolicy"
+  policy = data.aws_iam_policy_document.ecs_secret_policy.json
+}
 
-    content {
-      name   = "SecretsPolicy"
-      policy = data.aws_iam_policy_document.ecs_secret_policy.json
-    }
-  }
+resource "aws_iam_role_policy" "ssm_policy" {
+  count  = var.enable_execute_command ? 1 : 0
+  role   = aws_iam_role.ecs_task_execution_role.name
+  name   = "SSMPolicy"
+  policy = data.aws_iam_policy_document.ssm_policy.json
+}
 
-  dynamic "inline_policy" {
-    for_each = var.enable_execute_command ? [1] : []
-
-    content {
-      name   = "SSMPolicy"
-      policy = data.aws_iam_policy_document.ssm_policy.json
-    }
-  }
-
-  dynamic "inline_policy" {
-    for_each = var.additional_policy == null ? [] : [1]
-
-    content {
-      name   = "AdditionalPolicy"
-      policy = var.additional_policy
-    }
-  }
-
-  tags = var.tags
+resource "aws_iam_role_policy" "additional_policy" {
+  count  = var.additional_policy != null ? 1 : 0
+  role   = aws_iam_role.ecs_task_execution_role.name
+  name   = "AdditionalPolicy"
+  policy = var.additional_policy
 }
 
 resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerServiceforEC2Role" {

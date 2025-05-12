@@ -13,7 +13,10 @@ resource "aws_ecs_service" "this" {
   enable_execute_command = var.enable_execute_command
 
   service_registries {
-    registry_arn = aws_service_discovery_service.this.arn
+    registry_arn   = aws_service_discovery_service.this.arn
+    port           = var.service_registries_port
+    container_name = var.service_registries_container_name
+    container_port = var.service_registries_container_port
   }
 
   dynamic "network_configuration" {

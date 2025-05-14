@@ -309,9 +309,12 @@ variable "volumes" {
   type        = list(any)
 }
 
-variable "cluster_name" {
-  description = "Name of the ECS cluster"
-  type        = string
+variable "ecs_cluster" {
+  description = "ECS cluster"
+  type = object({
+    name = string
+    arn  = string
+  })
 }
 
 variable "ordered_placement_strategy" {

@@ -2,7 +2,7 @@ resource "aws_appautoscaling_target" "this" {
   count = local.fixed_capacity ? 0 : 1
 
   service_namespace  = "ecs"
-  resource_id        = "service/${data.aws_ecs_cluster.this.cluster_name}/${aws_ecs_service.this.name}"
+  resource_id        = "service/${var.ecs_cluster.name}/${aws_ecs_service.this.name}"
   scalable_dimension = "ecs:service:DesiredCount"
   min_capacity       = var.min_capacity
   max_capacity       = var.max_capacity

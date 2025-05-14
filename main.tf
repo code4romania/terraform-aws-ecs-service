@@ -1,7 +1,7 @@
 resource "aws_ecs_service" "this" {
   name            = var.namespace
   task_definition = aws_ecs_task_definition.this.arn
-  cluster         = data.aws_ecs_cluster.this.arn
+  cluster         = var.ecs_cluster.arn
 
   desired_count = local.fixed_capacity_count
 
